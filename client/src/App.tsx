@@ -1,9 +1,8 @@
 import { Switch, Route, useLocation } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-// import Dashboard from "./pages/Dashboard"; // Comentado temporariamente
+// import { queryClient } from "./lib/queryClient"; // COMENTADO TEMPORARIAMENTE
+// import { QueryClientProvider } from "@tanstack/react-query"; // COMENTADO TEMPORARIAMENTE
+// import { Toaster } from "@/components/ui/toaster"; // COMENTADO TEMPORARIAMENTE
+// import { TooltipProvider } from "@/components/ui/tooltip"; // COMENTADO TEMPORARIAMENTE
 
 // DEBUG: Componente para mostrar a rota atual
 function DebugRota() {
@@ -64,8 +63,8 @@ function TesteCriarSite() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
+    // <QueryClientProvider client={queryClient}>
+    //   <TooltipProvider>
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
           <Switch>
             {/* Debug - mostra rota atual */}
@@ -78,6 +77,20 @@ function App() {
             <Route path="/entrar" component={TesteEntrar} />
             <Route path="/criar-site" component={TesteCriarSite} />
             
+            {/* NOVA ROTA PARA TESTAR O REDIRECIONAMENTO */}
+            <Route path="/api/login">
+              <div style={{ padding: "20px", textAlign: "center" }}>
+                <h1 style={{ color: "orange", fontSize: "24px" }}>
+                  ⚠️ REDIRECIONAMENTO DETECTADO!
+                </h1>
+                <p>Você foi redirecionado para /api/login</p>
+                <p>Isso significa que algum código está fazendo redirecionamento automático.</p>
+                <a href="/" style={{ color: "blue", textDecoration: "underline" }}>
+                  Tentar voltar ao início
+                </a>
+              </div>
+            </Route>
+            
             {/* Rota 404 - página não encontrada */}
             <Route>
               <div style={{ padding: "20px", textAlign: "center" }}>
@@ -85,6 +98,7 @@ function App() {
                   404 - Página não encontrada
                 </h1>
                 <p>A página que você está procurando não existe.</p>
+                <p><strong>Rota atual:</strong> <span style={{color: "blue"}}>{window.location.pathname}</span></p>
                 <a href="/" style={{ color: "blue", textDecoration: "underline" }}>
                   Voltar ao início
                 </a>
@@ -92,9 +106,9 @@ function App() {
             </Route>
           </Switch>
         </div>
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
+        // <Toaster />
+    //   </TooltipProvider>
+    // </QueryClientProvider>
   );
 }
 
