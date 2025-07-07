@@ -27,8 +27,7 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
-    assetsDir: "assets",
-    copyPublicDir: true, // <-- IMPORTANTE
+    copyPublicDir: true, // ✅ Adicionado para manter o _redirects no build
   },
   server: {
     fs: {
