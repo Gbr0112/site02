@@ -24,6 +24,10 @@ function Router() {
       {/* Public routes */}
       <Route path="/s/:slug" component={SitePublic} />
       <Route path="/preview/:id" component={SitePublic} />
+
+      {/* Adicione estas rotas - direto para o Dashboard */}
+      <Route path="/entrar" component={Dashboard} />
+      <Route path="/criar-site" component={Dashboard} />
       
       {isLoading || !isAuthenticated ? (
         <Route path="/" component={Landing} />
