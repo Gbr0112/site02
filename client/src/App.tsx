@@ -28,13 +28,32 @@ function DebugRota() {
 function Home() {
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1 style={{ color: "blue", fontSize: "24px" }}>
-        🏠 PÁGINA HOME FUNCIONOU!
+      <h1 style={{ color: "green", fontSize: "24px" }}>
+        🎉 ROTEADOR FUNCIONANDO!
       </h1>
       <p>Rota / está funcionando corretamente.</p>
       <div style={{ marginTop: "20px" }}>
-        <a href="/entrar" style={{ marginRight: "10px", color: "blue" }}>Ir para /entrar</a>
-        <a href="/criar-site" style={{ color: "blue" }}>Ir para /criar-site</a>
+        <a href="/entrar" style={{ 
+          marginRight: "10px", 
+          color: "blue", 
+          textDecoration: "underline",
+          padding: "10px",
+          border: "1px solid blue",
+          borderRadius: "5px",
+          display: "inline-block"
+        }}>
+          Testar /entrar
+        </a>
+        <a href="/criar-site" style={{ 
+          color: "blue", 
+          textDecoration: "underline",
+          padding: "10px",
+          border: "1px solid blue",
+          borderRadius: "5px",
+          display: "inline-block"
+        }}>
+          Testar /criar-site
+        </a>
       </div>
     </div>
   );
