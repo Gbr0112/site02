@@ -1,85 +1,99 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { useAuth } from "@/hooks/useAuth";
-import { ThemeProvider } from "@/components/theme-provider";
-import Landing from "@/pages/landing";
-import Dashboard from "@/pages/dashboard";
-import SiteBuilder from "@/pages/site-builder";
-import SiteEditor from "@/pages/site-editor";
-import SitePreview from "@/pages/site-preview";
-import SiteAnalytics from "@/pages/site-analytics";
-import SitePublic from "@/pages/site-public";
-import Orders from "@/pages/orders";
-import Analytics from "@/pages/analytics";
-import NotFound from "@/pages/not-found";
+// import Dashboard from "./pages/Dashboard"; // Comentado temporariamente
 
-// Componentes simples para testar as rotas
+// DEBUG: Componente para mostrar a rota atual
+function DebugRota() {
+  const [location] = useLocation();
+  return (
+    <div style={{ 
+      position: "fixed", 
+      top: "10px", 
+      right: "10px", 
+      background: "black", 
+      color: "white", 
+      padding: "10px", 
+      borderRadius: "5px",
+      fontSize: "12px",
+      zIndex: 1000
+    }}>
+      <strong>ROTA ATUAL:</strong> {location}
+    </div>
+  );
+}
+
+// Componente HOME simples
+function Home() {
+  return (
+    <div style={{ padding: "20px", textAlign: "center" }}>
+      <h1 style={{ color: "blue", fontSize: "24px" }}>
+        🏠 PÁGINA HOME FUNCIONOU!
+      </h1>
+      <p>Rota / está funcionando corretamente.</p>
+      <div style={{ marginTop: "20px" }}>
+        <a href="/entrar" style={{ marginRight: "10px", color: "blue" }}>Ir para /entrar</a>
+        <a href="/criar-site" style={{ color: "blue" }}>Ir para /criar-site</a>
+      </div>
+    </div>
+  );
+}
 function TesteEntrar() {
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h1>✅ PÁGINA ENTRAR FUNCIONOU!</h1>
-      <p>A rota /entrar está funcionando corretamente.</p>
-      <a href="/">Voltar para home</a>
+    <div style={{ padding: "20px", textAlign: "center" }}>
+      <h1 style={{ color: "green", fontSize: "24px" }}>
+        ✅ PÁGINA ENTRAR FUNCIONOU!
+      </h1>
+      <p>Rota /entrar está funcionando corretamente.</p>
     </div>
   );
 }
 
 function TesteCriarSite() {
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h1>✅ PÁGINA CRIAR SITE FUNCIONOU!</h1>
-      <p>A rota /criar-site está funcionando corretamente.</p>
-      <a href="/">Voltar para home</a>
+    <div style={{ padding: "20px", textAlign: "center" }}>
+      <h1 style={{ color: "green", fontSize: "24px" }}>
+        ✅ PÁGINA CRIAR SITE FUNCIONOU!
+      </h1>
+      <p>Rota /criar-site está funcionando corretamente.</p>
     </div>
-  );
-}
-
-function Router() {
-  const { isAuthenticated, isLoading } = useAuth();
-
-  return (
-    <Switch>
-      {/* Rotas de teste - substitua por Dashboard depois que funcionar */}
-      <Route path="/entrar" component={TesteEntrar} />
-      <Route path="/criar-site" component={TesteCriarSite} />
-      
-      {/* Public routes */}
-      <Route path="/s/:slug" component={SitePublic} />
-      <Route path="/preview/:id" component={SitePublic} />
-      
-      {/* Conditional routes baseadas na autenticação */}
-      {isLoading || !isAuthenticated ? (
-        <Route path="/" component={Landing} />
-      ) : (
-        <>
-          <Route path="/" component={Dashboard} />
-          <Route path="/builder" component={SiteBuilder} />
-          <Route path="/editor/:siteId" component={SiteEditor} />
-          <Route path="/site-preview/:id" component={SitePreview} />
-          <Route path="/site-analytics/:id" component={SiteAnalytics} />
-          <Route path="/orders/:siteId" component={Orders} />
-          <Route path="/analytics/:siteId" component={Analytics} />
-        </>
-      )}
-      
-      {/* Catch-all para 404 */}
-      <Route component={NotFound} />
-    </Switch>
   );
 }
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
+      <TooltipProvider>
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+          <Switch>
+            {/* Debug - mostra rota atual */}
+            <DebugRota />
+            
+            {/* Rota principal */}
+            <Route path="/" component={Home} />
+            
+            {/* Rotas de teste - SUBSTITUA depois que funcionar */}
+            <Route path="/entrar" component={TesteEntrar} />
+            <Route path="/criar-site" component={TesteCriarSite} />
+            
+            {/* Rota 404 - página não encontrada */}
+            <Route>
+              <div style={{ padding: "20px", textAlign: "center" }}>
+                <h1 style={{ color: "red", fontSize: "24px" }}>
+                  404 - Página não encontrada
+                </h1>
+                <p>A página que você está procurando não existe.</p>
+                <a href="/" style={{ color: "blue", textDecoration: "underline" }}>
+                  Voltar ao início
+                </a>
+              </div>
+            </Route>
+          </Switch>
+        </div>
+        <Toaster />
+      </TooltipProvider>
     </QueryClientProvider>
   );
 }
