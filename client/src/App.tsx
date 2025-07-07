@@ -16,16 +16,39 @@ import Orders from "@/pages/orders";
 import Analytics from "@/pages/analytics";
 import NotFound from "@/pages/not-found";
 
+// Componentes simples para testar as rotas
+function TesteEntrar() {
+  return (
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h1>✅ PÁGINA ENTRAR FUNCIONOU!</h1>
+      <p>A rota /entrar está funcionando corretamente.</p>
+      <a href="/">Voltar para home</a>
+    </div>
+  );
+}
+
+function TesteCriarSite() {
+  return (
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h1>✅ PÁGINA CRIAR SITE FUNCIONOU!</h1>
+      <p>A rota /criar-site está funcionando corretamente.</p>
+      <a href="/">Voltar para home</a>
+    </div>
+  );
+}
+
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
 
   return (
     <Switch>
-      {/* Public routes - sempre disponíveis */}
+      {/* Rotas de teste - substitua por Dashboard depois que funcionar */}
+      <Route path="/entrar" component={TesteEntrar} />
+      <Route path="/criar-site" component={TesteCriarSite} />
+      
+      {/* Public routes */}
       <Route path="/s/:slug" component={SitePublic} />
       <Route path="/preview/:id" component={SitePublic} />
-      <Route path="/entrar" component={Dashboard} />
-      <Route path="/criar-site" component={Dashboard} />
       
       {/* Conditional routes baseadas na autenticação */}
       {isLoading || !isAuthenticated ? (
