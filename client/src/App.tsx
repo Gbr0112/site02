@@ -1,3 +1,5 @@
+import Dashboard from "./pages/Dashboard"; // Reativando o Dashboard
+
 function App() {
   const currentPath = window.location.pathname;
   
@@ -54,58 +56,10 @@ function App() {
         );
         
       case '/entrar':
-        return (
-          <div style={{ padding: "50px", textAlign: "center" }}>
-            <h1 style={{ color: "blue", fontSize: "48px" }}>
-              ✅ PÁGINA ENTRAR
-            </h1>
-            <p style={{ fontSize: "24px", marginBottom: "30px" }}>
-              Rota /entrar funcionando!
-            </p>
-            
-            <button 
-              onClick={() => navigateTo('/')}
-              style={{ 
-                padding: "20px 40px", 
-                fontSize: "20px", 
-                backgroundColor: "green", 
-                color: "white", 
-                border: "none", 
-                borderRadius: "10px",
-                cursor: "pointer"
-              }}
-            >
-              VOLTAR PARA HOME
-            </button>
-          </div>
-        );
+        return <Dashboard />;
         
       case '/criar-site':
-        return (
-          <div style={{ padding: "50px", textAlign: "center" }}>
-            <h1 style={{ color: "purple", fontSize: "48px" }}>
-              ✅ PÁGINA CRIAR SITE
-            </h1>
-            <p style={{ fontSize: "24px", marginBottom: "30px" }}>
-              Rota /criar-site funcionando!
-            </p>
-            
-            <button 
-              onClick={() => navigateTo('/')}
-              style={{ 
-                padding: "20px 40px", 
-                fontSize: "20px", 
-                backgroundColor: "green", 
-                color: "white", 
-                border: "none", 
-                borderRadius: "10px",
-                cursor: "pointer"
-              }}
-            >
-              VOLTAR PARA HOME
-            </button>
-          </div>
-        );
+        return <Dashboard />;
         
       default:
         return (
@@ -141,7 +95,7 @@ function App() {
       minHeight: "100vh", 
       backgroundColor: "#f5f5f5"
     }}>
-      {/* Debug da rota atual */}
+      {/* Debug da rota atual - corrigido */}
       <div style={{ 
         position: "fixed", 
         top: "10px", 
