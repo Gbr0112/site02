@@ -1,4 +1,4 @@
-import { Switch, Route, useLocation } from "wouter";
+import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -16,94 +16,48 @@ import Orders from "@/pages/orders";
 import Analytics from "@/pages/analytics";
 import NotFound from "@/pages/not-found";
 
-// Componente de Debug para identificar problemas
-function DebugRota() {
-  const [location] = useLocation();
-  return (
-    <div style={{ 
-      position: "fixed", 
-      top: "10px", 
-      right: "10px", 
-      background: "rgba(0,0,0,0.8)", 
-      color: "white", 
-      padding: "8px 12px", 
-      borderRadius: "6px",
-      fontSize: "12px",
-      fontFamily: "monospace",
-      zIndex: 1000
-    }}>
-      ROTA: {location} | AUTH: {useAuth().isAuthenticated ? 'OK' : 'NO'}
-    </div>
-  );
-}
-
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
-  
-  // 🔧 CORREÇÃO: Aguarda o carregamento da autenticação
+
+  // 🔧 CORREÇÃO: Aguarda loading completar antes de decidir as rotas
   if (isLoading) {
     return (
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center", 
-        minHeight: "100vh",
-        fontSize: "18px",
-        color: "#666"
-      }}>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ 
-            width: "40px", 
-            height: "40px", 
-            border: "4px solid #f3f3f3", 
-            borderTop: "4px solid #3498db",
-            borderRadius: "50%",
-            animation: "spin 1s linear infinite",
-            margin: "0 auto 20px auto"
-          }}></div>
-          <p>Carregando...</p>
+      <div className="min-h-screen bg-background-alt flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600">Carregando...</p>
         </div>
-        <style>{`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}</style>
       </div>
     );
   }
 
   return (
-    <>
-      <DebugRota />
-      <Switch>
-        {/* Public routes - sempre disponíveis */}
-        <Route path="/s/:slug" component={SitePublic} />
-        <Route path="/preview/:id" component={SitePublic} />
-        
-        {/* 🔧 CORREÇÃO: Lógica de autenticação simplificada */}
-        {!isAuthenticated ? (
-          // Usuário NÃO autenticado - só pode ver a Landing
-          <Route path="*" component={Landing} />
-        ) : (
-          // Usuário AUTENTICADO - acesso a todas as páginas
-          <>
-            <Route path="/" component={Dashboard} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/builder" component={SiteBuilder} />
-            <Route path="/editor/:siteId" component={SiteEditor} />
-            <Route path="/site-preview/:id" component={SitePreview} />
-            <Route path="/site-analytics/:id" component={SiteAnalytics} />
-            <Route path="/orders/:siteId" component={Orders} />
-            <Route path="/analytics/:siteId" component={Analytics} />
-            <Route path="/landing" component={Landing} />
-          </>
-        )}
-        
-        {/* 404 - sempre no final */}
-        <Route component={NotFound} />
-      </Switch>
-    </>
+    <Switch>
+      {/* 🔧 CORREÇÃO: Rotas públicas sempre disponíveis */}
+      <Route path="/s/:slug" component={SitePublic} />
+      <Route path="/preview/:id" component={SitePublic} />
+      
+      {/* 🔧 CORREÇÃO: Lógica de autenticação simplificada */}
+      {!isAuthenticated ? (
+        // Usuário NÃO autenticado: apenas Landing
+        <Route path="*" component={Landing} />
+      ) : (
+        // Usuário autenticado: todas as rotas
+        <>
+          <Route path="/" component={Dashboard} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/builder" component={SiteBuilder} />
+          <Route path="/editor/:siteId" component={SiteEditor} />
+          <Route path="/site-preview/:id" component={SitePreview} />
+          <Route path="/site-analytics/:id" component={SiteAnalytics} />
+          <Route path="/orders/:siteId" component={Orders} />
+          <Route path="/analytics/:siteId" component={Analytics} />
+          {/* Permite acesso ao Landing também */}
+          <Route path="/landing" component={Landing} />
+          <Route component={NotFound} />
+        </>
+      )}
+    </Switch>
   );
 }
 
