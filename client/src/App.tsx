@@ -1,49 +1,162 @@
 function App() {
+  const currentPath = window.location.pathname;
+  
+  // Função para navegar
+  const navigateTo = (path) => {
+    window.history.pushState({}, '', path);
+    window.location.reload(); // Força reload para atualizar
+  };
+  
+  // Renderização condicional baseada na URL
+  const renderPage = () => {
+    switch(currentPath) {
+      case '/':
+        return (
+          <div style={{ padding: "50px", textAlign: "center" }}>
+            <h1 style={{ color: "green", fontSize: "48px" }}>
+              🏠 PÁGINA HOME
+            </h1>
+            <p style={{ fontSize: "24px", marginBottom: "30px" }}>
+              Roteamento manual funcionando!
+            </p>
+            
+            <button 
+              onClick={() => navigateTo('/entrar')}
+              style={{ 
+                padding: "20px 40px", 
+                fontSize: "20px", 
+                backgroundColor: "blue", 
+                color: "white", 
+                border: "none", 
+                borderRadius: "10px",
+                cursor: "pointer",
+                marginRight: "10px"
+              }}
+            >
+              IR PARA /entrar
+            </button>
+            
+            <button 
+              onClick={() => navigateTo('/criar-site')}
+              style={{ 
+                padding: "20px 40px", 
+                fontSize: "20px", 
+                backgroundColor: "purple", 
+                color: "white", 
+                border: "none", 
+                borderRadius: "10px",
+                cursor: "pointer"
+              }}
+            >
+              IR PARA /criar-site
+            </button>
+          </div>
+        );
+        
+      case '/entrar':
+        return (
+          <div style={{ padding: "50px", textAlign: "center" }}>
+            <h1 style={{ color: "blue", fontSize: "48px" }}>
+              ✅ PÁGINA ENTRAR
+            </h1>
+            <p style={{ fontSize: "24px", marginBottom: "30px" }}>
+              Rota /entrar funcionando!
+            </p>
+            
+            <button 
+              onClick={() => navigateTo('/')}
+              style={{ 
+                padding: "20px 40px", 
+                fontSize: "20px", 
+                backgroundColor: "green", 
+                color: "white", 
+                border: "none", 
+                borderRadius: "10px",
+                cursor: "pointer"
+              }}
+            >
+              VOLTAR PARA HOME
+            </button>
+          </div>
+        );
+        
+      case '/criar-site':
+        return (
+          <div style={{ padding: "50px", textAlign: "center" }}>
+            <h1 style={{ color: "purple", fontSize: "48px" }}>
+              ✅ PÁGINA CRIAR SITE
+            </h1>
+            <p style={{ fontSize: "24px", marginBottom: "30px" }}>
+              Rota /criar-site funcionando!
+            </p>
+            
+            <button 
+              onClick={() => navigateTo('/')}
+              style={{ 
+                padding: "20px 40px", 
+                fontSize: "20px", 
+                backgroundColor: "green", 
+                color: "white", 
+                border: "none", 
+                borderRadius: "10px",
+                cursor: "pointer"
+              }}
+            >
+              VOLTAR PARA HOME
+            </button>
+          </div>
+        );
+        
+      default:
+        return (
+          <div style={{ padding: "50px", textAlign: "center" }}>
+            <h1 style={{ color: "red", fontSize: "48px" }}>
+              ❌ 404 - PÁGINA NÃO ENCONTRADA
+            </h1>
+            <p style={{ fontSize: "24px", marginBottom: "30px" }}>
+              Rota: {currentPath}
+            </p>
+            
+            <button 
+              onClick={() => navigateTo('/')}
+              style={{ 
+                padding: "20px 40px", 
+                fontSize: "20px", 
+                backgroundColor: "green", 
+                color: "white", 
+                border: "none", 
+                borderRadius: "10px",
+                cursor: "pointer"
+              }}
+            >
+              VOLTAR PARA HOME
+            </button>
+          </div>
+        );
+    }
+  };
+  
   return (
     <div style={{ 
-      padding: "50px", 
-      textAlign: "center", 
-      backgroundColor: "white",
-      minHeight: "100vh"
+      minHeight: "100vh", 
+      backgroundColor: "#f5f5f5"
     }}>
-      <h1 style={{ 
-        color: "red", 
-        fontSize: "48px",
-        marginBottom: "20px"
-      }}>
-        🚨 TESTE BÁSICO DO REACT
-      </h1>
-      
-      <p style={{ fontSize: "24px", marginBottom: "30px" }}>
-        Se você está vendo isso, o React está funcionando!
-      </p>
-      
+      {/* Debug da rota atual */}
       <div style={{ 
-        backgroundColor: "#f0f0f0", 
-        padding: "20px", 
-        borderRadius: "10px",
-        marginBottom: "30px"
+        position: "fixed", 
+        top: "10px", 
+        right: "10px", 
+        background: "black", 
+        color: "white", 
+        padding: "10px", 
+        borderRadius: "5px",
+        fontSize: "12px",
+        zIndex: 1000
       }}>
-        <h2>📍 INFORMAÇÕES:</h2>
-        <p><strong>URL atual:</strong> {window.location.href}</p>
-        <p><strong>Caminho:</strong> {window.location.pathname}</p>
-        <p><strong>Horário:</strong> {new Date().toLocaleTimeString()}</p>
+        <strong>ROTA:</strong> {currentPath}
       </div>
       
-      <button 
-        onClick={() => alert('JAVASCRIPT FUNCIONANDO!')}
-        style={{ 
-          padding: "20px 40px", 
-          fontSize: "20px", 
-          backgroundColor: "green", 
-          color: "white", 
-          border: "none", 
-          borderRadius: "10px",
-          cursor: "pointer"
-        }}
-      >
-        CLIQUE PARA TESTAR
-      </button>
+      {renderPage()}
     </div>
   );
 }
