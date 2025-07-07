@@ -1,7 +1,10 @@
 node_modules/
-# Ignora tudo dentro de dist/
-dist/
 
-# ...exceto o _redirects
+# Ignora tudo dentro de dist/
+dist/**
+
+# Excetua a pasta public e o arquivo _redirects
+!dist/public/
 !dist/public/_redirects
+
 *.log
