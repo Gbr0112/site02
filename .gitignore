@@ -1,7 +1,7 @@
 node_modules/
 
-# Ignora tudo dentro de dist/
-dist/**
+# Ignora tudo dentro de dist/ (diretório)
+dist/
 
 # Excetua a pasta public e o arquivo _redirects
 !dist/public/
