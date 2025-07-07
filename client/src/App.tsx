@@ -21,14 +21,13 @@ function Router() {
 
   return (
     <Switch>
-      {/* Public routes */}
+      {/* Public routes - sempre disponíveis */}
       <Route path="/s/:slug" component={SitePublic} />
       <Route path="/preview/:id" component={SitePublic} />
-
-      {/* Adicione estas rotas - direto para o Dashboard */}
       <Route path="/entrar" component={Dashboard} />
       <Route path="/criar-site" component={Dashboard} />
       
+      {/* Conditional routes baseadas na autenticação */}
       {isLoading || !isAuthenticated ? (
         <Route path="/" component={Landing} />
       ) : (
@@ -42,6 +41,8 @@ function Router() {
           <Route path="/analytics/:siteId" component={Analytics} />
         </>
       )}
+      
+      {/* Catch-all para 404 */}
       <Route component={NotFound} />
     </Switch>
   );
